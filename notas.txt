@@ -1,0 +1,19 @@
+Configuración de uploads grandes:
+Fichero php.ini (consultar localización en /home/maintenance)
+file_uploads
+upload_max_filesize
+max_input_time
+memory_limit
+max_execution_time
+post_max_size
+
+
+
+En el Oráculo, para que los enlaces de login sean capturados y se muestre la ventana con el iframe para las credenciales, el fichero
+/include/qa-app-format.php
+debe ser editado, en la función 
+	function qa_insert_login_links($htmlmessage, $topage=null, $params=null)
+
+en la línea
+				'^1' => empty($userlinks['login']) ? '' : '<A CLASS="loginLink" HREF="'.qa_html($userlinks['login']).'">',
+para que quede como figura ahí (con el atributo CLASS)

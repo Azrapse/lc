@@ -1,0 +1,1 @@
+<?php Configure::write('debug', 0); echo nl2br($value); ?>
