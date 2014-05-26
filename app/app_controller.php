@@ -1,6 +1,6 @@
 <?php
 class AppController extends Controller {
-	var $components = array('Auth', 'Session', 'Security', 'Email', 'Cookie');		
+	var $components = array('Auth', 'Session', 'Security', 'Email', 'Cookie', 'RequestHandler');
 	var $deniedAccessFallbackUrl = array('controller'=>'home', 'action'=>'index');
 	var $deniedAccessFlashMessage = 'Permiso denegado.';
 	var $isAdmin = false;
@@ -86,6 +86,12 @@ class AppController extends Controller {
 		$this->_setupSecurity();
 		
 		$this->send_notifications();
+        if ($this->RequestHandler->ext === 'json')
+        {
+            $this->RequestHandler->setContent('json', 'application/json');
+            //Prevent debug output that'll corrupt your json data
+            Configure::write('debug', 0);
+        }
 	}
 	
 	function endsWith($haystack, $needle) {

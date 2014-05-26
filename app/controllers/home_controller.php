@@ -27,7 +27,6 @@ class HomeController extends AppController {
 		}
 		else if ($role['Role']['codename'] == 'ADMIN') {
 			$this->set('isAdmin', true);			
-			// TODO: The default index is the admin index
 		}		
 		
 	}
