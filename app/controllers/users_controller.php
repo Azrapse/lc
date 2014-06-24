@@ -5,12 +5,13 @@ class UsersController extends AppController {
 	var $name = 'Users';    
 	var $components = array('RequestHandler', 'Cookie');	
 	var $helpers = array('Html', 'Ajax', 'Javascript');
-	
+	var $uses = array('ExpedientPass', 'User', 'Role');
+
 	function beforeFilter() 
 	{
 		parent::beforeFilter();
 		$actionName = $this->params['action'];
-		if(!in_array($actionName, array( 'login', 'expedient_login', 'uni_login', 'logout', 'terms', 'create_account'))){
+		if(!in_array($actionName, array( 'login', 'expedient_login', 'uni_login', 'logout', 'terms', 'create_account', 'loginPass'))){
 			$role = $this->getCurrentUserRole();
 			$roleCodename = $role['Role']['codename'];
 			if ($roleCodename == 'VIEWER')
@@ -35,7 +36,7 @@ class UsersController extends AppController {
 		// Esto permite ejecutar el código en login() antes de que se haga la redirección.
 		//$this->Auth->autoRedirect = false;
 		
-		$this->Auth->allow(array('expedient_login','terms', 'create_account', 'uni_login'));
+		$this->Auth->allow(array('expedient_login','terms', 'create_account', 'uni_login', 'loginPass'));
 		//$this->Auth->autoRedirect = false;
 	}
 	
@@ -77,6 +78,26 @@ class UsersController extends AppController {
 		$this->Session->setFlash('Identificación y/o contraseña incorrectas.');
 		$this->redirect('login');
 	}
+
+    function loginPass($pass)
+    {
+        $this->loadModel('ExpedientPass');
+        $expedientPass = $this->ExpedientPass->find('first', array(
+            'conditions' => array(
+                'pass' => $pass
+            ),
+            'recursive'=>0
+        ));
+        if(!empty($expedientPass)){
+            $this->loadModel('Role');
+            $viewerRole = $this->Role->findByCodename('VIEWER');
+            $viewerUser = $this->User->findByRoleId($viewerRole['Role']['id']);
+            $this->Auth->login($viewerUser);
+            $this->Session->write('allowed_expedient_id', $expedientPass['ExpedientPass']['expedient_id']);
+            $this->redirect(array('controller' => 'expedients', 'action' => 'view', $expedientPass['ExpedientPass']['expedient_id']));
+            return;
+        }
+    }
 
     function logout() 
 	{

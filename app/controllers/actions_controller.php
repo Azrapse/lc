@@ -32,6 +32,8 @@ class ActionsController extends AppController {
 	function edit($id){
 		if(!empty($this->data)){
 			$this->data['Action']['date'] = date_format(DateTime::createFromFormat('d/m/Y', $this->data['Action']['date']), 'Y-m-d');
+            $this->data['Action']['id'] = $id;
+            $this->Action->id = $id;
 			$this->Action->save($this->data);
 			$this->redirect(array('controller'=>'expedients', 'action'=>'view', $this->data['Action']['expedient_id']));
 		} else  {

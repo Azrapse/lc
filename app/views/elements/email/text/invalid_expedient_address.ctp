@@ -1,0 +1,3 @@
+The message sent to <?php echo $to ?> from <?php echo $from ?> with subject '<?php echo $subj ?>' on <?php echo $date ?> couldn't be delivered to any expedient. Please check the address. You could have misspelled it or it might have been changed.
+
+El mensaje enviado a <?php echo $to ?> por <?php echo $from ?> con asunto '<?php echo $subj ?>' el <?php echo $date ?> no pudo ser enviado a ningún expediente. Por favor, compruebe la dirección. Pudo haver cometido una errata o puede que haya sido cambiada.

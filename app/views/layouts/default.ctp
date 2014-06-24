@@ -28,8 +28,10 @@
 			jQuery.noConflict();
 		</script>
 	<?php
-		echo $this->Html->script('/js/dropdown/script');
+        echo $this->Html->script('jquery.printElement.min');
+		echo $this->Html->script('dropdown/script');
 		echo $this->Html->script('language');
+        echo $this->Html->script('periodic/action_mail_process');
 		
 		echo $scripts_for_layout;
 	?>
@@ -46,7 +48,13 @@
         $bodyAttr = null;
     }
 ?>
-<body <?php echo $bodyAttr; ?>>
+<body <?php echo $bodyAttr; ?>
+    data-mail-process-url="<?php echo $html->url(array('controller' => 'mails', 'action'=>'process'))?>"
+<?php if(array_key_exists('User', $session->read('Auth'))): ?>
+    data-user-id="<?php echo $currentUserId; ?>"
+    data-imported-actions-url="<?php echo $html->url(array('controller' => 'imported_actions'))?>"
+<?php endif ?>
+    >
 	<div id="container">
 		<div id="header">			
 			<div class="sitetitle">				
@@ -86,6 +94,9 @@
 					<span class="walletLink">
 						<? echo $this->Html->link($multilang->text("VerCartera"), array('controller'=>'user_items', 'action'=>'index'), array('escape'=>false)).' '; ?>
 					</span>
+
+                    <span id="importedActionsMenu" style="display: none;">
+                    </span>
 					<? endif; ?>
 					<span class="logoutLink">
 						<? echo $this->Html->link($multilang->text("Desconectar"), array('controller'=>'users', 'action'=>'logout'), array('escape'=>false)); ?>
@@ -131,7 +142,15 @@
 	<div class="contactBlock">
 		<?$multilang->__("HelpFooter")?>		
 	</div>
-	
+
+    <?php if($currentUserRole['Role']['codename'] == 'LAWYER'): ?>
+        <div id="importedActionsInbox" style="display: none;">
+            <h1><?$multilang->__("ImportedActions")?></h1>
+            <div class="contents">
+            </div>
+        </div>
+    <?php endif ?>
+
 	<?php // echo $this->element('sql_dump'); ?>
 </body>
 </html>

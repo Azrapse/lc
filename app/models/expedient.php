@@ -2,7 +2,7 @@
 	class Expedient extends AppModel 
 	{    
 		var $name = 'Expedient';
-		var $hasMany = 'Action';
+		var $hasMany = array('Action', 'ExpedientAddress', 'ExpedientPass');
 		var $belongsTo = 'User';
 		var $displayField = 'reference';
 		

@@ -4,10 +4,10 @@ class AppController extends Controller {
 	var $deniedAccessFallbackUrl = array('controller'=>'home', 'action'=>'index');
 	var $deniedAccessFlashMessage = 'Permiso denegado.';
 	var $isAdmin = false;
+    var $uses = array('Configuration', 'LocalizedText', 'Role', 'Action', 'Text');
 	
 	function tt($ttid)
 	{
-		$this->loadModel('Text');
 		$current_user = $this->Auth->user();
 		$langId = 2;
 		if($current_user != null){
@@ -37,7 +37,6 @@ class AppController extends Controller {
 
 	function getCurrentUserRole(){
 		$user = $this->Auth->user();
-		$this->loadModel('Role');
 		$role = $this->Role->find('first', array('conditions' => array('id' => $user['User']['role_id']), 'recursive' => -1));
 		
 		return $role;
@@ -46,9 +45,6 @@ class AppController extends Controller {
 	// This makes these helpers available in all views by default
 	function beforeRender(){
 		$this->helpers[] = 'Layout';
-		
-		
-		$this->loadModel('LocalizedText');
 		$user = $this->Auth->user();		
 		$langid = $user['User']['language_id'];
 		if($langid == null){			
@@ -82,10 +78,12 @@ class AppController extends Controller {
 		$this->Auth->loginError = "Credenciales incorrectas.";    
 		$this->Auth->authError = "Necesita identificarse para acceder.";
 		$role = $this->getCurrentUserRole();		
-		$this->set('currentUserRole', $role);		
+		$this->set('currentUserRole', $role);
+        $this->set('currentUserId', $this->getCurrentUserId());
 		$this->_setupSecurity();
 		
 		$this->send_notifications();
+
         if ($this->RequestHandler->ext === 'json')
         {
             $this->RequestHandler->setContent('json', 'application/json');
@@ -133,10 +131,7 @@ class AppController extends Controller {
 	}
 	
 	function send_notifications()
-	{	
-	
-		$this->loadModel('Configuration');
-		$this->loadModel('Action');
+	{
 		$lastSent = $this->Configuration->find('first', array('conditions'=>array('name'=> 'last_notification_time')));
 		
 		if($lastSent == null)
@@ -196,5 +191,61 @@ class AppController extends Controller {
 		
 		
 	}
+
+    function get_last_mail_process_time()
+    {
+        $process_time_info = $this->Configuration->find('first', array('conditions'=>array('name'=> 'mail_process_time')));
+        Configure::write('process_time_info', $process_time_info);
+        $process_time = '1900-01-01T00:00:00';
+        if($process_time_info != null)
+        {
+            $process_time = $process_time_info['Configuration']['value'];
+        }
+        return $process_time;
+    }
+
+    function set_last_mail_process_time($value)
+    {
+        $process_time_info = Configure::read('process_time_info');
+        if($process_time_info != null)
+        {
+            $process_time_info['Configuration']['value'] = $value;
+        }
+        else
+        {
+            $process_time_info = array(
+                'Configuration' => array(
+                    'name' => 'mail_process_time',
+                    'value' => $value
+                )
+            );
+        }
+        $this->Configuration->save($process_time_info);
+    }
+
+    function getDirectories($path){
+        $dirs = array();
+        if ($handle = opendir($path)) {
+            while (false !== ($file = readdir($handle))) {
+                if (is_dir($path.$file) && $file != "." && $file != "..") {
+                    $dirs[] = $path.$file.'/';
+                }
+            }
+            closedir($handle);
+        }
+        return $dirs;
+    }
+
+    function getEmptiestSubdir($path){
+        $ordered = array();
+        $subdirs = $this->getDirectories($path);
+
+        foreach($subdirs as $subdir){
+            $ordered[$subdir] = disk_free_space($subdir);
+        }
+        asort($ordered);
+        reset($ordered);
+        return key($ordered);
+    }
 }
 ?>

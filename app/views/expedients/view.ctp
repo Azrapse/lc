@@ -1,6 +1,7 @@
 <?=$layout->blockStart('viewhead');?>
-	<?php echo $this->Calendar->scripts(); ?>
 	<? echo $this->Html->script("expedient_view"); ?>
+    <? echo $this->Html->script("jquery.qrcode-0.7.0.min"); ?>
+    <?php echo $this->Calendar->scripts(); ?>
 <?=$layout->blockEnd();?>
 
 <? if(($isLawyer || $isAdmin) && !$noCustomer) { ?>
@@ -9,6 +10,7 @@
 	<?php echo $this->Html->link($multilang->text('IrA').' '.$expedient['User']['fullname'], array('controller' => 'users', 'action' => 'lawyers_customer_view', $expedient['User']['id']), array('class'=>'actions')); ?>
 </div>
 <? } ?>
+
 <? if(($isCustomer || $isLawyer || $isAdmin) && count($expedients) > 0 && !$noCustomer) { ?>
 	<div style="clear:right; float: right; width: 220px; margin: 10px 10px 10px 10px; ">
 		<fieldset>
@@ -73,30 +75,54 @@
 			); 
 		}
 	?>
-<?	if ($expedient['User']['id'] != null && ($isAdmin || $isLawyer)) {
-		echo '<i>*</i>';
-	}
-?>
-&nbsp;
-<b><?$multilang->__("ContrasenaParaVisualizacionPublica")?>:</b>
-	<?php 
-		if(!$isAdmin && !$isLawyer){
-			echo $expedient['Expedient']['password']; 
-		} else if ($isAdmin || $isLawyer){
-	?>
-			<div id='editorPassword' class='inplaceEditor'><?echo $expedient['Expedient']['password'];?></div>
-	<?		echo $ajax->editor(
-				'editorPassword', 
-				array('controller'=>'expedients', 'action'=>'ajaxEdit', $expedient['Expedient']['id'], 'password'),
-				array('okControl'=>'false', 'cancelControl'=>'false', 'submitOnBlur'=>'true', 'savingText'=>$multilang->text('Guardando'), 'clickToEditText'=>$multilang->text('PulseParaEditar'))
-			); 
-		}
-	?>
+
 <br />
-<?	if ($expedient['User']['id'] != null && ($isAdmin || $isLawyer)) {
-		echo '<i><b>*:</b> '.$multilang->text("ReferenceSubfixWarning2", dechex($expedient['User']['id'])).'</i> <br />';
-	}
-?>
+    <? if(($isLawyer || $isAdmin) && !$noCustomer) { ?>
+        <div class="expedientPassContainer" data-textChange="<?php $multilang->__("Cambiar")?>" data-textCreate="<?php $multilang->__("Crear")?>">
+            <div class="link">
+                <b><?$multilang->__("DireccionAcceso")?>:</b><br />
+                <?php if(sizeof($expedient['ExpedientPass']) > 0)
+                {?>
+                    <input class="expedientPass" type="text" readonly="readonly"
+                        value="<?php echo "https://$_SERVER[HTTP_HOST]".$this->Html->url(array('controller'=>'users', 'action'=>'loginPass',$expedient['ExpedientPass'][0]['pass']))?>"
+                        data-baseUrl="<?php echo "https://$_SERVER[HTTP_HOST]".$this->Html->url(array('controller'=>'users', 'action'=>'loginPass'))?>"/>
+                    <?php
+                    echo $this->Html->link($multilang->text("Cambiar"), array('controller' => 'expedient_passes', 'action' => 'post_bind_pass_to_expedient'), array('class'=>'actions expedientPassLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
+                }
+                else
+                {?>
+                    <input class="expedientPass" type="text" readonly="readonly" value=""
+                           data-baseUrl="<?php echo $this->Html->url(array('controller'=>'users', 'action'=>'loginPass'))?>"/>
+                    <?php
+                    echo $this->Html->link($multilang->text("Crear"), array('controller' => 'expedient_passes', 'action' => 'post_bind_pass_to_expedient'), array('class'=>'actions expedientPassLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
+                }
+                ?>
+            </div>
+            <div class="qr" style="display: none">
+            </div>
+        </div>
+
+    <div class="expedientAddressContainer" data-textChange="<?php $multilang->__("Cambiar")?>" data-textCreate="<?php $multilang->__("Crear")?>">
+        <div class="link">
+            <b><?$multilang->__("Email")?>:</b><br />
+            <?php if(sizeof($expedient['ExpedientAddress']) > 0)
+            {?>
+                <span class="expedientAddress"><?php echo $expedient['ExpedientAddress'][0]['address'] ?></span>
+
+                <?php
+                echo $this->Html->link($multilang->text("Cambiar"), array('controller' => 'mails', 'action' => 'post_bind_email_to_expedient'), array('class'=>'actions expedientAddressLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
+            }
+            else
+            {?>
+                <span class="expedientAddress"></span>
+            <?php
+                echo $this->Html->link($multilang->text("Crear"), array('controller' => 'mails', 'action' => 'post_bind_email_to_expedient'), array('class'=>'actions expedientAddressLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
+            }
+            ?>
+        </div>
+    </div>
+<? } ?>
+
 <b><?$multilang->__("Descripcion")?>:</b><br />
 	<?php 
 		if(!$isAdmin && !$isLawyer){
@@ -117,8 +143,9 @@
 <?php
 	foreach($expedient['Action'] as $action):
 ?>
+<a name="<?php echo $action['id']; ?>"></a>
 <fieldset>
-	<legend><? echo $action['concept']; ?></legend>
+	<legend><?php echo $action['concept']; ?></legend>
 	
 	<? if ($isAdmin || $isLawyer): ?>
 	<div style="float:right; text-align:right;">

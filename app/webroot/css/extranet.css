@@ -98,6 +98,11 @@ body
 	font-size: 1.25em;
 }
 
+.loginInfo .linkBlock span
+{
+    margin: 0 .5em;
+}
+
 .loginInfo .linkBlock a:link,
 .loginInfo .linkBlock a:visited,
 .loginInfo .linkBlock a:active
@@ -325,7 +330,6 @@ fieldset {
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px; 
 	border-radius: 10px; 
-	//background-color: #f0f0f0;
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -353,7 +357,6 @@ fieldset legend{
 	border-radius: 10px; 
 	border-width: 2px;
 	border-style: solid;
-	//background-color: #f9f9f9;
 	background: -webkit-gradient(
 		linear,
 		left top,
@@ -514,8 +517,6 @@ div.icons{
 	border-width: 1px;
 	padding: 10px;	 
 	border-radius: 10px; 
-	//background-image: -moz-linear-gradient(-45deg, #eeeeee, #dddddd);
-	//background: -webkit-gradient(linear, left top, right bottom, from(#eeeeee), to(#dddddd));  
 	background-color: #e8e8e8;
 	background: -webkit-gradient(
 		linear,
@@ -647,4 +648,73 @@ div.video
 	width: 16px;
 	height: 16px;
 	cursor: pointer;
+}
+
+#importedActionsInbox
+{
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: block;
+    width: auto;
+
+    border-style: solid;
+    border-width: 1px;
+    padding: .5em;
+    border-radius: 3px;
+    background-color: #e8e8e8;
+    background: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0.02, rgb(255,255,255)),
+        color-stop(0.9, rgb(232,232,232)),
+        color-stop(1, rgb(204,204,204))
+    );
+    background-image: -moz-linear-gradient(
+        center top,
+        rgb(255,255,255) 2%,
+        rgb(232,232,232) 90%,
+        rgb(204,204,204) 100%
+    );
+    border-color: #999999;
+    box-shadow: 2px 2px 3px #555555;
+    max-height: 400px;
+}
+
+#importedActionsInbox ul li
+{
+    list-style-type: none;
+    color: #000000;
+}
+
+#importedActionsInbox h1
+{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.deleteImportedActionLink
+{
+    opacity: .3;
+}
+.deleteImportedActionLink:hover
+{
+    opacity: 1;
+}
+
+input.expedientPass
+{
+    width: 50%;
+    border: 0 none transparent;
+    background-color: transparent;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+.expedientPassContainer .qr
+{
+    text-align: center;
+    cursor: pointer;
 }

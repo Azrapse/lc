@@ -51,11 +51,20 @@ class ExpedientsController extends AppController {
 				'User' => array(
 					'id', 
 					'fullname'
-				)
+				),
+                'ExpedientAddress' => array(
+                    'id',
+                    'address',
+                    'expedient_id'
+                ),
+                'ExpedientPass' => array(
+                    'id',
+                    'pass',
+                    'expedient_id'
+                )
 			)
 		));		
-		
-		
+
 		$auth = $this->Session->read('Auth');
 		
 		// Viewers can only see the expedient they gave credentials for
@@ -127,12 +136,15 @@ class ExpedientsController extends AppController {
 		$expedient = $this->Expedient->find('first', array('conditions' => array('id' => $id), 'recursive' => -1));
 		$expedient['Expedient'][$field] = $value;
 		$this->set('value', $value);
+
+		/* Disabled since Expedient Passes were added
 		// If it's reference, we add the user_id hexed subfix.
 		if ($field == 'reference' && !($this->endsWith($expedient['Expedient'][$field], '-'.dechex($expedient['Expedient']['user_id'])))) {
 			$moddedReference = $value.'-'.dechex($expedient['Expedient']['user_id']);
 			$expedient['Expedient'][$field] = $moddedReference;
 			$this->set('value', $moddedReference);
-		}		
+		}
+		*/
 		$this->Expedient->save($expedient);		
 		$this->layout = false;
 		$this->render('/ajax/ajax_inplaceeditor');

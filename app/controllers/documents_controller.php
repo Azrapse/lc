@@ -113,28 +113,7 @@ class DocumentsController extends AppController {
 		return false;
 	}
 	
-	function getDirectories($path){
-		$dirs = array();
-		if ($handle = opendir($path)) {
-			while (false !== ($file = readdir($handle))) {				
-				if (is_dir($path.$file) && $file != "." && $file != "..") {
-					$dirs[] = $path.$file.'/';
-				}
-			}
-			closedir($handle);
-		}
-		return $dirs;
-	}
-	
-	function getEmptiestSubdir($path){
-		$ordered = array();
-		$subdirs = $this->getDirectories($path);
-		foreach($subdirs as $subdir){
-			$ordered[] = array($subdir=>disk_free_space($subdir));
-		}
-		asort($ordered);
-		return key($ordered[0]);
-	}
+
 	
 	function findInSubdirs($path, $file){
 		$subdirs = $this->getDirectories($path);
