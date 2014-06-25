@@ -80,12 +80,13 @@
     <? if(($isLawyer || $isAdmin) && !$noCustomer) { ?>
         <div class="expedientPassContainer" data-textChange="<?php $multilang->__("Cambiar")?>" data-textCreate="<?php $multilang->__("Crear")?>">
             <div class="link">
-                <b><?$multilang->__("DireccionAcceso")?>:</b><br />
+                <fieldset>
+				<legend><?$multilang->__("DireccionAcceso")?></legend>
                 <?php if(sizeof($expedient['ExpedientPass']) > 0)
                 {?>
                     <input class="expedientPass" type="text" readonly="readonly"
                         value="<?php echo "https://$_SERVER[HTTP_HOST]".$this->Html->url(array('controller'=>'users', 'action'=>'loginPass',$expedient['ExpedientPass'][0]['pass']))?>"
-                        data-baseUrl="<?php echo "https://$_SERVER[HTTP_HOST]".$this->Html->url(array('controller'=>'users', 'action'=>'loginPass'))?>"/>
+                        data-baseUrl="<?php echo "https://$_SERVER[HTTP_HOST]".$this->Html->url(array('controller'=>'users', 'action'=>'loginPass'))?>" />
                     <?php
                     echo $this->Html->link($multilang->text("Cambiar"), array('controller' => 'expedient_passes', 'action' => 'post_bind_pass_to_expedient'), array('class'=>'actions expedientPassLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
                 }
@@ -97,6 +98,7 @@
                     echo $this->Html->link($multilang->text("Crear"), array('controller' => 'expedient_passes', 'action' => 'post_bind_pass_to_expedient'), array('class'=>'actions expedientPassLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
                 }
                 ?>
+				</fieldset>
             </div>
             <div class="qr" style="display: none">
             </div>
@@ -104,7 +106,8 @@
 
     <div class="expedientAddressContainer" data-textChange="<?php $multilang->__("Cambiar")?>" data-textCreate="<?php $multilang->__("Crear")?>">
         <div class="link">
-            <b><?$multilang->__("Email")?>:</b><br />
+			<fieldset>
+            <legend><?$multilang->__("Email")?>:</legend>
             <?php if(sizeof($expedient['ExpedientAddress']) > 0)
             {?>
                 <span class="expedientAddress"><?php echo $expedient['ExpedientAddress'][0]['address'] ?></span>
@@ -119,6 +122,7 @@
                 echo $this->Html->link($multilang->text("Crear"), array('controller' => 'mails', 'action' => 'post_bind_email_to_expedient'), array('class'=>'actions expedientAddressLink', 'id'=>$expedient['Expedient']['id'], 'reference'=>$expedient['Expedient']['reference']));
             }
             ?>
+			</fieldset>
         </div>
     </div>
 <? } ?>

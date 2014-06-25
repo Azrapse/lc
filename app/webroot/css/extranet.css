@@ -718,3 +718,21 @@ input.expedientPass
     text-align: center;
     cursor: pointer;
 }
+
+.link > fieldset
+{
+	/*background-image: none;
+	background-color: transparent;	*/
+	display: inline-block;
+	border: 0px none transparent;
+	margin-bottom: 0;
+	
+}
+
+.link > fieldset > legend
+{	
+	font-weight: bold;
+	background-image: none;
+	background-color: transparent;	
+	border: 0 none transparent;
+}

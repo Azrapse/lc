@@ -97,7 +97,7 @@ class HomeController extends AppController {
 			'fields' => array('Expedient.id', 'Expedient.reference', 'Expedient.description', 'User.id', 'User.fullname', 'User.lawyer_id'),
 			'recursive' => 0,
 			'limit' => 10,
-			'order' => 'Expedient.reference',
+			'order' => 'Expedient.id DESC',
 		);
 
 		$this->data = $this->paginate('Expedient');

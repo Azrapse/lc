@@ -34,7 +34,11 @@
 			</li>
 			<li>
 				<img src="<?php echo $this->webroot?>/img/metro/email.png"/>
-				<?php $multilang->__("Recordatorios")?>				
+				<?php $multilang->__("Recordatorios")?>
+			</li>
+			<li>
+				<img src="<?php echo $this->webroot?>/img/metro/paperplane.png"/>
+				<?php $multilang->__("MailActionsFeature")?>
 			</li>
 			<li>
 				<img src="<?php echo $this->webroot?>/img/metro/oraculo.png"/>
@@ -43,6 +47,10 @@
 			<li>
 				<img src="<?php echo $this->webroot?>/img/metro/blog.png"/>
 				<?php $multilang->__("BlogNoticias")?>					
+			</li>
+			<li>
+				<img src="<?php echo $this->webroot?>/img/metro/qrcode.png"/>
+				<?php $multilang->__("QrCodes")?>					
 			</li>
 		</ul>
 	</div>

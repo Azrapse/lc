@@ -58,6 +58,7 @@
 			<legend><?$multilang->__("Clientes")?></legend>
 		<p><?$multilang->__("ClientesExplanation")?></p>
 		<br />
+		<? echo $this->Html->link($multilang->text('CrearNuevoCliente'), array('controller' => 'users', 'action' => 'add_customer', $user['id']), array('class' => 'actions')); ?>
 		<table>
 			<tr>
 				<th>
@@ -88,10 +89,7 @@
 			</tr>
 		<? endforeach; ?>
 		</table>
-
-		<br />
-		<? echo $this->Html->link($multilang->text('CrearNuevoCliente'), array('controller' => 'users', 'action' => 'add_customer', $user['id']), array('class' => 'actions')); ?>
-		
+				
 		</fieldset>
 	</div>
 
