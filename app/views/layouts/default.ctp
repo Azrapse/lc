@@ -75,13 +75,13 @@
 				</span>
 				<span id="flagTray" data-url="<?=$this->Html->url(array('controller'=>'users', 'action'=>'ajaxChangeLanguage'))?>">
 					<span class="flag spanish" data-langid="2">
-						<img src="<?php echo $this->webroot?>/img/flags/Spain-icon.png">
+						<img src="<?php echo $this->webroot?>img/flags/Spain-icon.png">
 					</span>
 					<span class="flag portuguese" data-langid="3">
-						<img src="<?php echo $this->webroot?>/img/flags/Portugal-icon.png">
+						<img src="<?php echo $this->webroot?>img/flags/Portugal-icon.png">
 					</span>
 					<span class="flag english" data-langid="1">
-						<img src="<?php echo $this->webroot?>/img/flags/United-Kingdom-icon.png">
+						<img src="<?php echo $this->webroot?>img/flags/United-Kingdom-icon.png">
 					</span>
 				</span>
 				<span class="linkBlock">					

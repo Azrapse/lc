@@ -25,31 +25,31 @@
 	<div class="loginDescription">
 		<ul>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/cloud.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/cloud.png"/>
 				<?php $multilang->__("EnLaNube")?>				
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/law.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/law.png"/>
 				<?php $multilang->__("MantenInformados")?>				
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/email.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/email.png"/>
 				<?php $multilang->__("Recordatorios")?>
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/paperplane.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/paperplane.png"/>
 				<?php $multilang->__("MailActionsFeature")?>
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/oraculo.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/oraculo.png"/>
 				<?php $multilang->__("ResuelveDudas")?>				
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/blog.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/blog.png"/>
 				<?php $multilang->__("BlogNoticias")?>					
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>/img/metro/qrcode.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/qrcode.png"/>
 				<?php $multilang->__("QrCodes")?>					
 			</li>
 		</ul>

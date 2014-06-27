@@ -4,10 +4,10 @@
 		function scripts(){
 			App::Import('Helper', 'Html');
 			$Html = new HtmlHelper();
-			$str = $Html->script($this->webroot.'/js/jscalendar/calendar.js');
-			$str .= $Html->script($this->webroot.'/js/jscalendar/lang/calendar-es.js');
-			$str .= $Html->script($this->webroot.'/js/jscalendar/calendar-setup.js');
-			$str .= $Html->css($this->webroot.'/js/jscalendar/skins/tiger/theme.css');
+			$str = $Html->script($this->webroot.'js/jscalendar/calendar.js');
+			$str .= $Html->script($this->webroot.'js/jscalendar/lang/calendar-es.js');
+			$str .= $Html->script($this->webroot.'js/jscalendar/calendar-setup.js');
+			$str .= $Html->css($this->webroot.'js/jscalendar/skins/tiger/theme.css');
 			return $str;
 		}
 		
