@@ -39,6 +39,7 @@ class ActionsController extends AppController {
 		} else  {
 			$this->data = $this->Action->find('first', array('conditions' => array('id'=>$id), 'recursive'=>-1));
 			$this->data['Action']['date'] = date('d/m/Y', strtotime($this->data['Action']['date']));
+			//$this->data['Action']['comments'] = htmlspecialchars($this->data['Action']['comments']);
 			$statuses = $this->Action->Status->find('list');
 			$this->set('statuses', $statuses);				
 		}
