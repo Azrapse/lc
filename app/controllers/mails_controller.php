@@ -460,8 +460,9 @@ class MailsController extends AppController {
             $message = $message;
         }
         return array(
-            'contents' => $message,
+            'contents' => utf8_encode($message),
             'type' => $type,
+			'originalType' => $part->type,
             'name' => $name,
             'isAttachment' => $isAttachment,
             'encoding' => $encoding

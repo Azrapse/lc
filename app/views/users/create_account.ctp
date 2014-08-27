@@ -27,7 +27,7 @@
 	?>
 		</div>
 	<?
-		echo $form->end($multilang->text('CrearCuenta');
+		echo $form->end($multilang->text('CrearCuenta'));
 	?>
 	<form>
 		<div class="required">

@@ -180,7 +180,7 @@
 			echo $this->Calendar->set($notifyId, true, "%Y-%m-%d", $onClose); ?>		
 	<? endif; ?>
 	<br />
-	<b><?$multilang->__("Comentarios")?>:</b><br /><? echo $action['comments']; ?>
+	<b><?$multilang->__("Comentarios")?>:</b><br /><? echo nl2br(str_replace('&nbsp;',"\n",$action['comments'])); ?>
 
 
 	<?
