@@ -22,7 +22,7 @@
 		</div>
 		</fieldset>
 	</div>
-	<div class="loginDescription">
+	<div class="loginDescription"> 
 		<ul>
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/cloud.png"/>
@@ -33,24 +33,27 @@
 				<?php $multilang->__("MantenInformados")?>				
 			</li>
 			<li>
-				<img src="<?php echo $this->webroot?>img/metro/email.png"/>
+				<img src="<?php echo $this->webroot?>img/metro/email.png"/>				
 				<?php $multilang->__("Recordatorios")?>
+				<img class="hoverShow" src="/img/reminders.gif" alt="Demo">
 			</li>
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/paperplane.png"/>
 				<?php $multilang->__("MailActionsFeature")?>
+				<img class="hoverShow" src="/img/email_sincro.gif" alt="Demo">
 			</li>
-			<li>
+			<!--<li>
 				<img src="<?php echo $this->webroot?>img/metro/oraculo.png"/>
 				<?php $multilang->__("ResuelveDudas")?>				
 			</li>
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/blog.png"/>
 				<?php $multilang->__("BlogNoticias")?>					
-			</li>
+			</li>-->
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/qrcode.png"/>
-				<?php $multilang->__("QrCodes")?>					
+				<?php $multilang->__("QrCodes")?>	
+				<img class="hoverShow" src="/img/codigo_qr.gif" alt="Demo">
 			</li>
 		</ul>
 	</div>
