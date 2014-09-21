@@ -35,11 +35,13 @@
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/email.png"/>				
 				<?php $multilang->__("Recordatorios")?>
+				<img class="helpicon" src="/img/metro/questionmark.png" alt="?" />
 				<img class="hoverShow" src="/img/reminders.gif" alt="Demo">
 			</li>
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/paperplane.png"/>
 				<?php $multilang->__("MailActionsFeature")?>
+				<img class="helpicon" src="/img/metro/questionmark.png" alt="?" />
 				<img class="hoverShow" src="/img/email_sincro.gif" alt="Demo">
 			</li>
 			<!--<li>
@@ -53,6 +55,7 @@
 			<li>
 				<img src="<?php echo $this->webroot?>img/metro/qrcode.png"/>
 				<?php $multilang->__("QrCodes")?>	
+				<img class="helpicon" src="/img/metro/questionmark.png" alt="?" />
 				<img class="hoverShow" src="/img/codigo_qr.gif" alt="Demo">
 			</li>
 		</ul>

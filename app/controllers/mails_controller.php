@@ -92,6 +92,8 @@ class MailsController extends AppController {
         {
             return $messages;
         }
+		imap_headers($mbox);
+		
         $overview=imap_fetch_overview($mbox,"1:$MN",0);
         $size=sizeof($overview);
         // Iterate over the overviews to discard those that don't belong to any expedient
@@ -100,20 +102,34 @@ class MailsController extends AppController {
         $addressesDict = array();
         for($i=$size-1;$i>=0;$i--)
         {
-            $val=$overview[$i];
-            $to=$val->to;
+            $val=$overview[$i];            
             $deleted = $val->deleted;
             if($deleted)
             {
                 continue;
             }
-            $matches = array();
-            preg_match_all($this->emailPattern, $to, $matches);
-            // Add all addresses to the addresses array to consult which ones actually are linked to an expedient
-            foreach($matches[0] as $email){
-                $addresses[] = $email;
-                $addressesDict[$email] = $val;
-            }
+			$header = imap_header($mbox, $val->msgno);
+			if(isset($header->to) and sizeof($header->to)){
+				foreach($header->to as $address){
+					$email = $address->mailbox.'@'.$address->host;
+					$addresses[] = $email;
+					$addressesDict[$email] = $val;
+				}
+			}
+			if(isset($header->cc) and sizeof($header->cc)){
+				foreach($header->cc as $address){
+					$email = $address->mailbox.'@'.$address->host;
+					$addresses[] = $email;
+					$addressesDict[$email] = $val;
+				}
+			}
+			if(isset($header->bcc) and sizeof($header->bcc)){
+				foreach($header->bcc as $address){
+					$email = $address->mailbox.'@'.$address->host;
+					$addresses[] = $email;
+					$addressesDict[$email] = $val;
+				}
+			}
         }
         if(sizeof($addresses) == 0)
         {
@@ -143,10 +159,29 @@ class MailsController extends AppController {
             $date=$val->date;
             $subj=$val->subject;
             $to=$val->to;
+			$header = imap_header($mbox, $val->msgno);
             // Determine if the "to" address is invalid, then reply to the senders of their mails that they
             // aren't valid. Then delete them.
             // The To: may contain several receivers. Get them all and check them all.
-            $tos = $this->extract_emails_from($to);
+            $tos = array();
+			if(isset($header->to) and sizeof($header->to)){
+				foreach($header->to as $address){
+					$email = $address->mailbox.'@'.$address->host;
+					$tos[] = $email;
+				}
+			}
+			if(isset($header->cc) and sizeof($header->cc)){
+				foreach($header->cc as $address){
+					$email = $address->mailbox.'@'.$address->host;
+					$tos[] = $email;
+				}
+			}
+			if(isset($header->bcc) and sizeof($header->bcc)){
+				foreach($header->bcc as $address){
+					$email = $address->mailbox.'@'.$address->host;
+					$tos[] = $email;
+				}
+			}
             $isValid = false;
             foreach($tos as $toAddress)
             {

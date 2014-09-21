@@ -49,6 +49,14 @@ body
 	
 }
 
+.loginDescription li img.helpicon
+{
+	float: right;
+	margin-right: .5em;
+	width: 32px;
+	height: 32px;
+}
+
 
 .create_account_panel  .identification_data,
 .create_account_panel  .place_data
@@ -748,7 +756,7 @@ input.expedientPass
 	box-shadow: 2px 2px 2px black;
 }
 
-.loginDescription > ul > li:hover > .hoverShow
+.loginDescription > ul > li > .helpicon:hover + .hoverShow
 {
 	display: block;	
 }
