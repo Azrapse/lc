@@ -1,4 +1,6 @@
-﻿<fieldset class="create_account_panel">
+﻿<?php echo $this->Html->script('https://www.google.com/recaptcha/api/js/recaptcha_ajax.js'); ?>
+
+<fieldset class="create_account_panel">
 	<legend>
 		<?$multilang->__('CrearCuenta')?>
 
@@ -26,6 +28,7 @@
 		echo $form->input('postal_code', array('label'=>$multilang->text('CodigoPostal'), 'autocomplete'=>'off','maxLength'=>10));		
 	?>
 		</div>
+		<div id="recaptcha_div"></div>
 	<?
 		echo $form->end($multilang->text('CrearCuenta'));
 	?>
@@ -38,3 +41,10 @@
 	</form>
 	</div>
 </fieldset>
+<script>
+jQuery(function(){
+    Recaptcha.create("<?php echo Configure::read("recatpch_settings.public_key")?>", 'recaptcha_div', {
+    theme: "red",
+    callback: Recaptcha.focus_response_field});
+});
+</script>

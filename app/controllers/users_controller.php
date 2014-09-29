@@ -313,6 +313,15 @@ class UsersController extends AppController {
 					$error_message = $error_message . 'Revise los datos proporcionados, hay algunos errores.';
 				}
 			}
+			// Check captcha
+			App::import('Vendor', 'recaptchalib', array('file' => 'recaptchalib/recaptchalib.php'));        
+			$resp = recaptcha_check_answer (Configure::read("recatpch_settings.private_key"),
+								$_SERVER["REMOTE_ADDR"],
+								$this->params['form']["recaptcha_challenge_field"],
+								$this->params['form']["recaptcha_response_field"]);
+			if (!$resp->is_valid) {
+				$error_message = 'The reCAPTCHA wasn\'t entered correctly. Please, try again.';
+			} 
 			
 			if($error_message != ''){
 				$this->Session->setFlash($error_message);
@@ -333,7 +342,7 @@ class UsersController extends AppController {
 					'UserItem' => array(
 						'user_id'=> $this->User->id,
 						'item_type_id' => 1,
-						'amount' => 50,
+						'amount' => 10,
 						'usable' => 1,
 						'invoice' => uniqid()
 					)
